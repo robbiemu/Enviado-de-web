@@ -9,7 +9,8 @@ class Progreso
 		@ventana.resizable = true
 		@ventana.set_title  "Barra de progreso"
 		@ventana.border_width = 10
-		@ventana.signal_connect('delete_event') { detener() }
+		@ventana.signal_connect('delete_event') { detener(); false }
+		@ventana.signal_connect('destroy') { detener() }
 		@ventana.set_size_request(-1, -1)
 
 		@alineación = Gtk::Alignment.new(0.5, 0.5, 0.0, 0.0)
@@ -17,7 +18,7 @@ class Progreso
 		@alineación.add(@barra)
 
 		@botón = Gtk::Button.new("Cancelar")
-		@botón.signal_connect('clicked') { |w| detener() }
+		@botón.signal_connect('clicked') { detener() }
 
 		@hq = Gtk::HBox.new(false, 5)
 		@hq.border_width = 10

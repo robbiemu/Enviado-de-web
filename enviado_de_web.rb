@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 require 'unicode'
+require 'gtk2'
 
 require "lib/browser"
 require "lib/gui"
@@ -12,14 +13,25 @@ Thread.abort_on_exception = true
 
 g = Progreso.new()
 gui = Thread.new do
+	oldfase = nil
 	loop do
-		Gtk.main_iteration while Gtk.events_pending?
-		g.pulsar(fase)
+		Gtk.main_iteration while Gtk.events_pending?	
+		if fase != oldfase
+			g.pulsar(fase)
+			oldfase = fase
+		end
 	end
 end
 
-Kernel.trap('INT') { g.detener(); exit 1 }
-Kernel.trap('SIGINT') { g.detener(); exit 1 }
+def muere()
+	g.detener()
+	p "found sigint"
+	exit 1
+end
+trap('INT') { muere() }
+trap('QUIT') { muere() }
+trap('TERM') {  muere() }
+#Signal.trap('SIGINT') { g.detener(); p "found sigint"; Kernel.exit 1 }
 
 unless ARGV[1]
 	g.salir("No hay ningún archivo para enviar. Sale...")
@@ -47,7 +59,6 @@ rescue
 end
 
 trabajo = Thread.new do
-		p "."
 	e = BrowserEnviado.new()
 	b = Progreso.new()
 
@@ -71,5 +82,10 @@ trabajo = Thread.new do
 	end
 	e.enviar( url )
 end
+
+fork && Process.wait
+
 trabajo.join
 g.detener()
+
+fork && Process.wait

@@ -10,6 +10,7 @@ class BrowserEnviado
 	end
 
 	def enviar(url)
+	p "-"
 		if @browser.nil? or url.class != String
 			return
 		end

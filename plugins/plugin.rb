@@ -1,3 +1,5 @@
+STDOUT.flush()
+
 class Plugin
 	@internal_methods=[]
 	def initialize(fh)
@@ -10,12 +12,15 @@ class Plugin
 			i = 0
 		end
 		i +=1
+		sleep(i)
 		p i
 	end
 	def b(i)
+		sleep(i)
 		p "#{i} at b"
 	end
 	def c(i)
+		sleep(i)
 		i +=2
 		p i
 	end

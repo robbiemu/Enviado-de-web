@@ -18,9 +18,12 @@ gui = Thread.new do
 	end
 end
 
+Kernel.trap('INT') { g.detener(); exit 1 }
+Kernel.trap('SIGINT') { g.detener(); exit 1 }
+
 unless ARGV[1]
 	g.salir("No hay ningún archivo para enviar. Sale...")
-	exit 1
+	exit 2
 end
 archivo=ARGV[1].sub( /file:\/\//, "" )
 
@@ -33,14 +36,14 @@ begin
 	require pa
 rescue
 	g.salir("No hay módulo #{pa} que usarse en la carpeta de plugins")
-	exit 2
+	exit 3
 end
 		
 begin
 	Módulo = Object.const_get( nc )
 rescue
 	g.salir("Módulo #{pa} en 'plugins' sin class de nombre '#{nc}'")
-	exit 2
+	exit 3
 end
 
 trabajo = Thread.new do
@@ -62,7 +65,11 @@ trabajo = Thread.new do
 			exit url
 		when String
 			g.pulsar(fase, url)
+		when Array
+			g.pulsar(url[0], url[1])
 		end
 	end
 	e.enviar( url )
 end
+trabajo.join
+g.detener()

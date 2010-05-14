@@ -13,7 +13,7 @@ class Plugin
 		p i
 	end
 	def b(i)
-		p i + " at b"
+		p "#{i} at b"
 	end
 	def c(i)
 		i +=2

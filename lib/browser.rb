@@ -13,7 +13,7 @@ class BrowserEnviado
 		if @browser.nil? or url.class != String
 			return
 		end
-		system(*BROWSER, url)
+		system(*@browser, url)
 	end
 end
 

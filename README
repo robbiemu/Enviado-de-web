@@ -1,0 +1,101 @@
+= -*- RD -*-
+
+= README
+
+== enviado_de_web - modular enviado del red para archivos
+
+Este es un programa básico y módulos varios para el envío de archivos
+sobre el red, con una barra de progreso de gnome para inclusión en su
+gestor de ventanas. El programa está bastante extensible con un marco
+modular, y e incluye módulos para Imageshack de la caja.
+
+
+== Copyright Notice (Avisos de Derechos de autor)
+
+GPL v3.0 - ./gpl.v3.txt
+
+=== es
+    enviado_de_web - modular enviado del red para archivos
+    Copyright (C) 2010 Robert Collins
+
+    Este programa es software libre. Puede redistribuirlo y/o modificarlo
+    bajo los términos de la Licencia Pública General de GNU según es 
+    publicada por la Free Software Foundation, bien de la versión 3 de 
+    dicha Licencia o bien (según su elección) de 
+    cualquier versión posterior.
+
+    Este programa se distribuye con la esperanza de que sea útil, 
+    pero SIN NINGUNA GARANTÍA, incluso sin la garantía MERCANTIL implícita
+    o sin garantizar la CONVENIENCIA PARA UN PROPÓSITO PARTICULAR. Véase
+    la Licencia Pública General de GNU para más detalles. 
+
+    Debería haber recibido una copia de la Licencia Pública General junto
+    con este programa. Si no ha sido así, consulte 
+    <http://www.gnu.org/licenses/>.
+    Consulte el archivo «gpl.v3.txt» dístribido con el código fuente.
+
+=== en
+    enviado_de_web - modular helper app to post files to web sites
+    Copyright (C) 2010 Robert Collins
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    See the file "gpl.v3.txt" distributed with the source code.
+
+
+== Prerrequisitos
+
+=== de Sistema
+
+Ruby - 1.9.1 quizá menos [ http://ruby-lang.org/es ]
+Gtk+2 - y libraries afines [ http://es.gnome.org ]
+
+=== de Ruby
+
+ruby-gnome2-all - quizá solo ruby-gtk2 (no probado) [ http://ruby-gnome2.sourceforge.jp ]
+Ruby gems [ http://rubygems.org ]
+Mechanize gem [ gem install mechanize ]
+Unicode gem [ gem install unicode ]
+
+=== nota de instalar ruby-gnome2-all de fuente
+
+La versión 0.19.4 te da problemas con el fuente con 
+1.8 < su ruby < 1.9.1. Para compilar el programa, primero tiene que
+hacer arreglares en los extconf.rb, como esta:
+	find . -name extconf.rb -exec ruby -e "newf=\"\";fn = ARGV[2]; File.open(fn).each_line do |l| newf += l.sub(/#{ARGV[0]}/, ARGV[1]) end; File.open(\"#{fn}\", 'w') {|f| f.write(newf) }" '(File.expand_path\(.*\))' '\1.force_encoding("UTF-8")' {} \; -print
+
+
+== Instalación
+
+Típicamente hay que sólo:
+
+	./configure
+	make
+	sudo make install
+
+para la instalación.
+
+Usted puede ordenar «configure --help» para opciones de instalación
+si por ejemplo tiene varias instalaciones de ruby o se prefiere una
+carpeta de raíz alternativa que «/usr/local».
+
+Si usted está reconstruyendo de la fuente, primero haga:
+
+	make distclean
+
+antes de que su «make» y «make install».
+
+
+== Sitio web
+
+http://webposter.github.com
